@@ -10,6 +10,6 @@ export class MenugeneradoService {
   }
   
   generarMenu(){
-	  
+	  dfgsdfdsfdsfdsgdsf
   }
 }
