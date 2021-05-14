@@ -1,0 +1,12 @@
+<div *ngIf="menudiabean">
+	<div class="card-header" style="background-color: #61c77d;">
+		<h4 class="my-0 font-weight-normal">{{menudiabean.noDiaSemana}}</h4>
+	</div>
+	<div class="card-body" style="height: 80px;">{{menudiabean.menuEscogido}}</div>
+	<div class="card-footer">
+		<ul class="nav">
+			<li class="nav-item"><a class="btn btn-outline-warning active"><fa-icon [icon]="['far', 'star']"></fa-icon></a></li>
+			<li class="nav-item"><a class="btn btn-outline-success"><fa-icon [icon]="['fas', 'pen']"></fa-icon></a></li>
+		</ul>
+	</div>
+</div>
