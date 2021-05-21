@@ -35,6 +35,6 @@ export class InicioComponent implements OnInit {
     this.userSubject = new BehaviorSubject<User>(JSON.parse(localStorage.getItem('user')));
     this.user = this.userSubject.asObservable();
     
-		this.menugeneradoService.generarMenu(this.userSubject.value.id+'', this.userSubject.value.id+'');
+		this.menugeneradoService.generarMenu('edwinrjrc@gmail.com', 'password');
 	}
 }
