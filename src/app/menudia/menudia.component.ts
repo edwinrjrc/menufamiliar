@@ -9,7 +9,7 @@ import { Menudiabean } from '../menudiabean';
 })
 export class MenudiaComponent implements OnInit {
 	
-  @Input() menudiabean: Menudiabean;
+  @Input() menudiabean: any;
 
   constructor(faConfig: FaConfig) {
     faConfig.defaultPrefix = 'far';

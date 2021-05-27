@@ -1,19 +1,23 @@
 <div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom shadow-sm">
-  <h5 class="my-0 mr-md-auto font-weight-normal"><fa-icon [icon]="['fas', 'home']"></fa-icon> Menu Familiar</h5>
-  <nav class="my-2 my-md-0 mr-md-3"><a class="p-2 text-dark" href="#">Recetas</a><a class="p-2 text-dark" href="#">Configuracion</a><a class="p-2 text-dark" href="#">Indicadores</a></nav>
-<div ngbDropdown class="d-inline-block">
-      <button class="btn btn-outline-primary" id="dropdownBasic1" ngbDropdownToggle>Mis Opciones</button>
-      <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
-        <button ngbDropdownItem>Mi Perfil</button>
-        <button ngbDropdownItem>Mi Configuración</button>
-		<div class="dropdown-divider"></div>
-        <button ngbDropdownItem (click)="cerrarSesion()">Cerrar Sesión</button>
-      </div>
+  <h5 class="my-0 mr-md-auto font-weight-normal">
+    <fa-icon [icon]="['fas', 'home']"></fa-icon> Menu Familiar
+  </h5>
+  <nav class="my-2 my-md-0 mr-md-3"><a class="p-2 text-dark" href="#">Recetas</a><a class="p-2 text-dark"
+      href="#">Configuracion</a><a class="p-2 text-dark" href="#">Indicadores</a></nav>
+  <div ngbDropdown class="d-inline-block">
+    <button class="btn btn-outline-primary" id="dropdownBasic1" ngbDropdownToggle>Mis Opciones</button>
+    <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+      <button ngbDropdownItem>Mi Perfil</button>
+      <button ngbDropdownItem>Mi Configuración</button>
+      <div class="dropdown-divider"></div>
+      <button ngbDropdownItem (click)="cerrarSesion()">Cerrar Sesión</button>
     </div>
+  </div>
 </div>
 <div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
   <h1 class="display-4">Bienvenido</h1>
-  <p class="lead">Genera un menu nutritivo y saludable que le ayuda a mantener sus indicadores de salud en niveles estables</p>
+  <p class="lead">Genera un menu nutritivo y saludable que le ayuda a mantener sus indicadores de salud en niveles
+    estables</p>
 </div>
 <div class="container-fluid">
   <div class="card">
@@ -22,11 +26,11 @@
       <button type="button" class="btn btn-outline-secondary">Exportar Lista Ingredientes</button>
     </div>
     <div class="card-body">
-      <div class="card-deck text-center" *ngFor="let v_semana of listaSemana">
-		<div class="card mb-2 shadow-sm" *ngFor="let v_menuDia of v_semana.listaDias">
-			<app-menudia [menudiabean]="v_menuDia"></app-menudia>
-		</div>
-	  </div>
+      <div class="card-deck text-center" *ngFor="let v_semana of listaSemanas">
+        <div class="card mb-2 shadow-sm" *ngFor="let v_menuDia of v_semana.listaMenuSemana">
+          <app-menudia [menudiabean]="v_menuDia"></app-menudia>
+        </div>
+      </div>
     </div>
   </div>
   <app-footer></app-footer>

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Menudiabean } from '../menudiabean';
+import { Semanabean } from '../semanabean';
 import { FaConfig } from '@fortawesome/angular-fontawesome';
 
 import { AuthenticationService } from '@app/_services';
@@ -16,8 +17,8 @@ import { BehaviorSubject, Observable, throwError } from 'rxjs';
 export class InicioComponent implements OnInit {
   private userSubject: BehaviorSubject<User>;
   public user: Observable<User>;
-
-	listaSemana: any[] = [];
+  listaSemanas: any[] = [];
+	listaPlatos: any[] = [];
     
   constructor(faConfig: FaConfig, private authenticationService: AuthenticationService, private menugeneradoService: MenugeneradoService) {
       faConfig.defaultPrefix = 'far';
@@ -35,6 +36,17 @@ export class InicioComponent implements OnInit {
     this.userSubject = new BehaviorSubject<User>(JSON.parse(localStorage.getItem('user')));
     this.user = this.userSubject.asObservable();
     
-		this.menugeneradoService.generarMenu('edwinrjrc@gmail.com', 'password');
+		this.menugeneradoService.generarMenu('1', '1').subscribe(resp => console.log(resp));
+    
+    this.menugeneradoService.consultarMenuGenerado('1').subscribe(resp => {
+      let v_semana = new Semanabean();
+
+      v_semana.numeroSemana = 1;
+      v_semana.listaMenuSemana = resp.dataRpta.listaPlatos;
+      this.listaSemanas.push(v_semana);
+      console.log(this.listaSemanas);
+    });
+
+    
 	}
 }

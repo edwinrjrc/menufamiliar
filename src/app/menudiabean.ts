@@ -1,6 +1,7 @@
-export interface Menudiabean {
+export class Menudiabean {
   numeroSemana: number;
   diaSemana: number;
-  noDiaSemana : string;
+  nombreDia : string;
   menuEscogido : string;
+  fechaConsumo: Date;
 }
