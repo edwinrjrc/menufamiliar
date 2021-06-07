@@ -17,14 +17,14 @@ import { BehaviorSubject, Observable, throwError } from 'rxjs';
 export class InicioComponent implements OnInit {
   private userSubject: BehaviorSubject<User>;
   public user: Observable<User>;
-  listaSemanas: any[] = [];
-	listaPlatos: any[] = [];
+  listaMenuSemana: any[] = [];
     
   constructor(faConfig: FaConfig, private authenticationService: AuthenticationService, private menugeneradoService: MenugeneradoService) {
       faConfig.defaultPrefix = 'far';
   }
   
   ngOnInit() {
+    this.consultarMenuGenerado('1');
   }
 	
 	cerrarSesion(){
@@ -36,17 +36,17 @@ export class InicioComponent implements OnInit {
     this.userSubject = new BehaviorSubject<User>(JSON.parse(localStorage.getItem('user')));
     this.user = this.userSubject.asObservable();
     
-		this.menugeneradoService.generarMenu('1', '1').subscribe(resp => console.log(resp));
-    
-    this.menugeneradoService.consultarMenuGenerado('1').subscribe(resp => {
-      let v_semana = new Semanabean();
-
-      v_semana.numeroSemana = 1;
-      v_semana.listaMenuSemana = resp.dataRpta.listaPlatos;
-      this.listaSemanas.push(v_semana);
-      console.log(this.listaSemanas);
+		this.menugeneradoService.generarMenu('1', '1').subscribe(resp => {
+      console.log(resp);
+      this.consultarMenuGenerado('1');
     });
 
-    
 	}
+
+  consultarMenuGenerado(idPersona:string){
+    this.menugeneradoService.consultarMenuGenerado(idPersona).subscribe(resp => {
+      console.log(resp);
+      this.listaMenuSemana = resp.dataRpta;
+    });
+  }
 }
