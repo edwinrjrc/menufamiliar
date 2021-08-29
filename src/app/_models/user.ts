@@ -3,5 +3,6 @@
     username: string;
     firstName: string;
     lastName: string;
-    token: string;
+    accessToken: string;
+    expires_in: number;
 }

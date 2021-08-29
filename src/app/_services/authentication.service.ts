@@ -10,14 +10,9 @@ import { User } from '@app/_models';
 @Injectable({ providedIn: 'root' })
 export class AuthenticationService {
     private userSubject: BehaviorSubject<User>;
-    public user: Observable<User>;
 
-    constructor(
-        private router: Router,
-        private http: HttpClient
-    ) {
+    constructor(private router: Router, private http: HttpClient) {
         this.userSubject = new BehaviorSubject<User>(JSON.parse(localStorage.getItem('user')));
-        this.user = this.userSubject.asObservable();
     }
 
     public get userValue(): User {
@@ -26,12 +21,12 @@ export class AuthenticationService {
 
     login(username: string, password: string) {
         return this.http.post<any>(`${environment.apiUrl}/mf-service-security/api/auth/login`, { username, password })
-            .pipe(map(user => {
+            .pipe(map(resp => {
                 // store user details and basic auth credentials in local storage to keep user logged in between page refreshes
-                user.authdata = window.btoa(username + ':' + password);
-                localStorage.setItem('user', JSON.stringify(user));
-                this.userSubject.next(user);
-                return user;
+                let usuario:User = <User>resp.dataRpta;
+                localStorage.setItem('user', JSON.stringify(usuario));
+                this.userSubject.next(usuario);
+                return resp;
             }));
     }
 

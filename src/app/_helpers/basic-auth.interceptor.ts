@@ -7,6 +7,7 @@ import { AuthenticationService } from '@app/_services';
 
 @Injectable()
 export class BasicAuthInterceptor implements HttpInterceptor {
+    
     constructor(private authenticationService: AuthenticationService) { }
 
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
@@ -14,13 +15,13 @@ export class BasicAuthInterceptor implements HttpInterceptor {
         console.log('interceptando peticion 1');
 
         const user = this.authenticationService.userValue;
-        const isLoggedIn = user && user.token;
+        const isLoggedIn = user && user.accessToken;
         const isApiUrl = request.url.startsWith(environment.apiUrl);
 		
         if (isLoggedIn && isApiUrl) {
             request = request.clone({
                 setHeaders: { 
-                    Authorization: `Basic ${user.token}`
+                    Authorization: `Basic ${user.accessToken}`
                 }
             });
         }

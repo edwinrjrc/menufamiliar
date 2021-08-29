@@ -18,7 +18,10 @@ export class MenugeneradoService {
   }
 
   consultarMenuGenerado(idPersona: string){
-    console.log('idPersona ::'+idPersona);
     return this.http.get<any>(`http://desktop-77qekgo:24209/mf-service-menu/menuservice/menuGenerado/${ idPersona }`);
+  }
+
+  cambiarMenuDia(idPersona: string, idTipoPlato: string, fechaConsumo: string){
+    return this.http.put<any>(`http://desktop-77qekgo:24209/mf-service-menu/menuservice/menuDetalle`, {idPersona, idTipoPlato, fechaConsumo})
   }
 }
