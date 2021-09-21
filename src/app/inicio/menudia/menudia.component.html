@@ -8,8 +8,27 @@
 		<ul class="nav">
 			<li class="nav-item" title="Favorito"><a class="btn btn-outline-warning active" (click)="desmarcarPlatoFavorito(menudiabean.platoDto.id)" *ngIf="menudiabean.platoDto.favorito == true"><fa-icon [icon]="['far', 'star']"></fa-icon></a></li>
 			<li class="nav-item" title="Favorito"><a class="btn btn-outline-warning" (click)="marcarPlatoFavorito(menudiabean.platoDto.id)" *ngIf="menudiabean.platoDto.favorito == false"><fa-icon [icon]="['far', 'star']"></fa-icon></a></li>
-			<li class="nav-item" title="Buscar Plato"><a class="btn btn-outline-success"><fa-icon [icon]="['fas', 'pen']"></fa-icon></a></li>
+			<li class="nav-item" title="Buscar Plato"><a class="btn btn-outline-success" (click)="open(content)"><fa-icon [icon]="['fas', 'pen']"></fa-icon></a></li>
 			<li class="nav-item" title="Cambiar Plato"><a class="btn btn-outline-success" (click)="cambiarMenuDia(menudiabean.idTipoPlato,menudiabean.fechaConsumoStr)"><fa-icon [icon]="['fas', 'sync-alt']"></fa-icon></a></li>
 		</ul>
 	</div>
 </div>
+<ng-template #content let-modal>
+	<div class="modal-header">
+		<h5>Escoja su plato</h5>
+	</div>
+	<div class="modal-body">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-12">
+					<div class="form-group">
+						<input type="text" class="form-control" />
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="modal-footer">
+		<button type="button" class="btn btn-success" (click)="modal.close('Save click')">Aceptar</button>
+	  </div>
+</ng-template>

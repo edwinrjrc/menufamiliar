@@ -1,0 +1,30 @@
+<app-cabecera></app-cabecera>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12" style="text-align: left;">
+            <h3>Buscador de Recetas</h3>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="form-group">
+                <input type="search" class="form-control" [(ngModel)] = "nombrePlato" placeholder="Escribe el nombre del plato" autofocus>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <div class="list-group" style="overflow-y: scroll;-webkit-overflow-scrolling: touch; height: 400px;">
+                <a class="list-group-item list-group-item-action flex-column align-items-start" *ngFor="let v_plato of listaPlatos | filtroplatos: nombrePlato">
+                    <div class="d-flex w-100 justify-content-between">
+                        <h5 class="mb-1"><span style="color:rgb(14, 16, 100)">{{v_plato.nombrePlato}}</span>&nbsp;<span style="color:rgb(192, 169, 38)" *ngIf="v_plato.favorito"><fa-icon [icon]="['fas', 'star']"></fa-icon></span></h5>
+                        <small>3 days ago</small>
+                    </div>
+                    <p class="mb-1">{{v_plato.descripcionPlato}}</p>
+                    <small>Donec id elit non mi porta.</small>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container-fluid">
+    <app-footer></app-footer>
+</div>

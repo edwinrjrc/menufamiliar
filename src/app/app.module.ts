@@ -1,50 +1,63 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule, HttpRequest, HttpHandler, HttpEvent, HttpInterceptor, HTTP_INTERCEPTORS} from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { Routes, RouterModule } from '@angular/router';
 import { AppComponent } from './app.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { HttpClientModule, HttpRequest, HttpHandler, HttpEvent, HttpInterceptor, HTTP_INTERCEPTORS } from '@angular/common/http';
+
+//FONT AWESOME
 import { FontAwesomeModule, FaIconLibrary } from '@fortawesome/angular-fontawesome';
 import { fas } from '@fortawesome/free-solid-svg-icons';
 import { far } from '@fortawesome/free-regular-svg-icons';
 import { fab } from '@fortawesome/free-brands-svg-icons';
-import { FooterComponent } from './footer/footer.component';
-import { MenudiaComponent } from './menudia/menudia.component';
-import { InicioComponent } from './inicio/inicio.component';
-import { IndexComponent } from './index/index.component';
 
-import { BasicAuthInterceptor, ErrorInterceptor, JwtInterceptor } from './_helpers';
-//import { fakeBackendProvider } from './_helpers';
+//COMPONENTES
+import { IndexComponent } from './index/index.component';
+import { InicioComponent } from './inicio/inicio.component';
+import { CabeceraComponent } from './inicio/cabecera/cabecera.component';
+import { CabeceramenugeneradoComponent } from './inicio/cabeceramenugenerado/cabeceramenugenerado.component';
+import { FooterComponent } from './inicio/footer/footer.component';
+import { MenudiaComponent } from './inicio/menudia/menudia.component';
+import { MenugeneradoComponent } from './inicio/menugenerado/menugenerado.component';
+import { RecetasComponent } from './inicio/recetas/recetas.component';
+
+//
+import { JwtInterceptor } from './_helpers';
+import { ErrorInterceptor } from './_helpers';
+import { FiltroplatosPipe } from './inicio/filtroplatos.pipe';
 
 @NgModule({
   declarations: [
     AppComponent,
+    IndexComponent,
+    InicioComponent,
+    CabeceraComponent,
+    CabeceramenugeneradoComponent,
     FooterComponent,
     MenudiaComponent,
-    InicioComponent,
-    IndexComponent
+    MenugeneradoComponent,
+    RecetasComponent,
+    FiltroplatosPipe
   ],
   imports: [
     BrowserModule,
-	FormsModule,
-	ReactiveFormsModule,
+    FormsModule,
+	  ReactiveFormsModule,
     AppRoutingModule,
     NgbModule,
     FontAwesomeModule,
-	HttpClientModule 
+    HttpClientModule
   ],
   providers: [
-	  { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
-      { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
-
-	  // provider used to create fake backend
-	  //fakeBackendProvider
+    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
+      { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true }
   ],
   bootstrap: [AppComponent]
 })
 export class AppModule {
-	constructor(library: FaIconLibrary) {
-      library.addIconPacks(fas, far, fab);
-    }
+  constructor(library: FaIconLibrary) {
+    library.addIconPacks(fas, far, fab);
+  }
 }

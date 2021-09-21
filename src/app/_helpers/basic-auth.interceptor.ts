@@ -12,11 +12,9 @@ export class BasicAuthInterceptor implements HttpInterceptor {
 
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
         // add header with basic auth credentials if user is logged in and request is to the api url
-        console.log('interceptando peticion 1');
-
         const user = this.authenticationService.userValue;
         const isLoggedIn = user && user.accessToken;
-        const isApiUrl = request.url.startsWith(environment.apiUrl);
+        const isApiUrl = request.url.startsWith(environment.apiUrl_1);
 		
         if (isLoggedIn && isApiUrl) {
             request = request.clone({

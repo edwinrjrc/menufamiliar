@@ -20,7 +20,7 @@ export class AuthenticationService {
     }
 
     login(username: string, password: string) {
-        return this.http.post<any>(`${environment.apiUrl}/mf-service-security/api/auth/login`, { username, password })
+        return this.http.post<any>(`${environment.apiUrl_1}/mf-service-security/api/auth/login`, { username, password })
             .pipe(map(resp => {
                 // store user details and basic auth credentials in local storage to keep user logged in between page refreshes
                 let usuario:User = <User>resp.dataRpta;

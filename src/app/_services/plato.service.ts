@@ -1,9 +1,6 @@
 import { Injectable } from '@angular/core';
 import { environment } from '@environments/environment';
 import { HttpClient } from '@angular/common/http';
-import { map, catchError } from 'rxjs/operators';
-import { BehaviorSubject, Observable, throwError } from 'rxjs';
-import { Router } from '@angular/router';
 
 
 @Injectable({
@@ -15,6 +12,10 @@ import { Router } from '@angular/router';
     }
 
     marcarPlatoFavorito(idPlato:number, idPersona:number){
-        return this.http.post<any>(`http://desktop-77qekgo:24210/mf-service-plato/platoservice/platoFavorito`, { idPlato, idPersona });
+      return this.http.post<any>(`${environment.apiUrl_24210}/mf-service-plato/platoservice/platoFavorito`, { idPlato, idPersona });
     }
+    listarPlatos(idPersona:number){
+      return this.http.get<any>(`${environment.apiUrl_24210}/mf-service-plato/platoservice/platos/${ idPersona }`);
+    }
+
 }

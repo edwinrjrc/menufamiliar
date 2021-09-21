@@ -14,14 +14,14 @@ export class MenugeneradoService {
   }
   
   generarMenu(idUsuario: string, idPersona: string){
-    return this.http.post<any>(`http://desktop-77qekgo:24209/mf-service-menu/menuservice/menugenerado`, { idUsuario, idPersona });
+    return this.http.post<any>(`${environment.apiUrl_24209}/mf-service-menu/menuservice/menugenerado`, { idUsuario, idPersona });
   }
 
   consultarMenuGenerado(idPersona: string){
-    return this.http.get<any>(`http://desktop-77qekgo:24209/mf-service-menu/menuservice/menuGenerado/${ idPersona }`);
+    return this.http.get<any>(`${environment.apiUrl_24209}/mf-service-menu/menuservice/menuGenerado/${ idPersona }`);
   }
 
   cambiarMenuDia(idPersona: string, idTipoPlato: string, fechaConsumo: string){
-    return this.http.put<any>(`http://desktop-77qekgo:24209/mf-service-menu/menuservice/menuDetalle`, {idPersona, idTipoPlato, fechaConsumo})
+    return this.http.put<any>(`${environment.apiUrl_24209}/mf-service-menu/menuservice/menuDetalle`, {idPersona, idTipoPlato, fechaConsumo})
   }
 }

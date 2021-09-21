@@ -1,0 +1,15 @@
+<div class="container-fluid">
+    <div class="card">
+        <div class="card-header">
+            <button type="button" class="btn btn-outline-secondary" (click)="generarMenu()">Generar Menu</button>
+            <button type="button" class="btn btn-outline-secondary">Exportar Lista Ingredientes</button>
+        </div>
+        <div class="card-body">
+            <div class="card-deck text-center" *ngFor="let v_semana of listaMenuSemana">
+                <div class="card mb-2 shadow-sm" *ngFor="let v_menuDia of v_semana.menuSemana.listaPlatos">
+                    <app-menudia [menudiabean]="v_menuDia"></app-menudia>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
