@@ -27,6 +27,7 @@ import { RecetasComponent } from './inicio/recetas/recetas.component';
 import { JwtInterceptor } from './_helpers';
 import { ErrorInterceptor } from './_helpers';
 import { FiltroplatosPipe } from './inicio/filtroplatos.pipe';
+import { RecetaComponent } from './inicio/recetas/receta/receta.component';
 
 @NgModule({
   declarations: [
@@ -39,7 +40,8 @@ import { FiltroplatosPipe } from './inicio/filtroplatos.pipe';
     MenudiaComponent,
     MenugeneradoComponent,
     RecetasComponent,
-    FiltroplatosPipe
+    FiltroplatosPipe,
+    RecetaComponent
   ],
   imports: [
     BrowserModule,

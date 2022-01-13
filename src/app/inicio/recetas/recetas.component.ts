@@ -24,13 +24,11 @@ export class RecetasComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    console.log('Recetas platos');
     this.listarPlatos();
   }
 
   listarPlatos(){
     this.platoService.listarPlatos(parseInt(this.idUser)).subscribe(resp => {
-      console.log(resp);
       this.listaPlatos = resp.dataRpta;
     })
   }

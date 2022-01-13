@@ -1,0 +1,83 @@
+<app-cabecera></app-cabecera>
+<div class="container-fluid">
+    <h4>Receta de {{v_nomPlato}}</h4>
+</div>
+<div class="container-fluid">
+    <p>{{v_deplato}}</p>
+</div>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-2">
+            <label for="staticPorciones">Porciones</label>
+        </div>
+        <div class="col-md-2">
+            <input type="text" readonly class="form-control-plaintext" id="staticPorciones" value="4">
+        </div>
+    </div>
+</div> 
+<div class="container-fluid">
+    <h5><span style="color: forestgreen;">Ingredientes</span></h5>
+    <hr>
+</div>
+<div class="container">
+    <table class="table table-sm table-striped table-hover">
+        <thead>
+            <tr>
+                <th style="width: 10%;">Cantidad</th>
+                <th style="width: 20%;">Unidad Medida</th>
+                <th style="width: 70%;">Ingrediente</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let v_ingrediente of v_ingredientes">
+                <td style="width: 10%;text-align: right;">{{v_ingrediente.cantidad}}</td>
+                <td style="width: 20%;">{{v_ingrediente.unidadMedida.nombre}}</td>
+                <td style="width: 70%;">{{v_ingrediente.ingrediente.nombreIngrediente}}</td>
+            </tr>
+
+        </tbody>
+    </table>
+</div>
+<div class="container-fluid">
+    <h5><span style="color: coral">Preparación</span></h5>
+    <hr>
+</div>
+<div class="container">
+    <table class="table table-sm table-striped table-hover">
+        <thead>
+            <tr>
+                <th style="width: 10%;">Paso</th>
+                <th style="width: 75%;">Descripcion</th>
+                <th style="width: 15%;">Tiempo (min)</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let v_paso of v_preparacion">
+                <td style="width: 10%;text-align: right;">{{v_paso.idPaso}}</td>
+                <td style="width: 75%;">{{v_paso.descripcionReceta}}</td>
+                <td style="width: 15%;text-align: right;">{{v_paso.minutosCompletar}}</td>
+            </tr>
+
+        </tbody>
+    </table>
+</div>
+<div class="container-fluid">
+    <hr>
+    <p style="text-align: center;">Le fue util la informacion que encontro</p>
+    <div class="container">
+
+        <div class="row">
+            <div class="col-md-6" style="text-align: center;">
+                <button type="button" class="btn btn-outline-info" style="width: 150px;">Si</button>
+            </div>
+            <div class="col-md-6" style="text-align: center;">
+                <button type="button" class="btn btn-outline-info" style="width: 150px;">No, editar receta</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+<br>
+<div class="container-fluid">
+    <app-footer></app-footer>
+</div>

@@ -1,67 +1,90 @@
 <header class="principal d-flex">
 	<div class="container text-center my-auto">
-		<h1 class="mb-1"><span class="texto-titulo-principal color_blanco_texto"><fa-icon [icon]="['fas', 'home']"></fa-icon> &nbsp; Menu Familiar</span></h1>
+		<h1 class="mb-1"><span class="texto-titulo-principal color_blanco_texto">
+				<fa-icon [icon]="['fas', 'home']"></fa-icon> &nbsp; Menu Familiar
+			</span></h1>
 		<h3 class="mb-5">
 			<em class="color_blanco_texto">El plato que tu esperas</em>
 		</h3>
-		<a class="btn btn-success btn-lg" (click)="open(content)"><span class="texto_boton_contac"><fa-icon [icon]="['fas', 'user-lock']"></fa-icon>&nbsp;Ingresar</span></a>
+		<a class="btn btn-success btn-lg" (click)="open(content)"><span class="texto_boton_contac">
+				<fa-icon [icon]="['fas', 'user-lock']"></fa-icon>&nbsp;Ingresar
+			</span></a>
 	</div>
 </header>
 <ng-template #content let-modal>
-  <div class="modal-body">
-	<ngb-tabset [destroyOnHide]="false">
-		<ngb-tab>
-		    <ng-template ngbTabTitle><b>Iniciar Sesión</b></ng-template>
-			<ng-template ngbTabContent>
-			  <br/>
-			  <div class="container">
-				<div class="row">
-					<div class="col-md-12">
-					<form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-						<div class="form-group">
-							<input type="email" class="form-control" formControlName="username" id="emailLogin" aria-describedby="emailHelp" placeholder="Ingresa tu email" maxlength="50" />
+	<div class="modal-body">
+		<ngb-tabset [destroyOnHide]="false">
+			<ngb-tab>
+				<ng-template ngbTabTitle><b>Iniciar Sesión</b></ng-template>
+				<ng-template ngbTabContent>
+					<br />
+					<div class="container">
+						<div class="row">
+							<div class="col-md-12">
+								<form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+									<div class="form-group">
+										<input type="email" class="form-control" formControlName="username"
+											id="emailLogin" aria-describedby="emailHelp" placeholder="Ingresa tu email"
+											maxlength="50" />
+									</div>
+									<div class="form-group">
+										<input type="password" class="form-control" formControlName="password"
+											id="passwordLogin" placeholder="Contraseña" maxlength="10" />
+									</div>
+									<button [disabled]="loading" class="btn btn-success btn-sm btn-block"><span
+											*ngIf="loading"
+											class="spinner-border spinner-border-sm mr-1"></span>Ingresar</button>
+									<div *ngIf="error" class="alert alert-danger mt-3 mb-0">{{error}}</div>
+								</form>
+							</div>
 						</div>
-						<div class="form-group">
-							<input type="password" class="form-control" formControlName="password" id="passwordLogin" placeholder="Contraseña" maxlength="10"/>
-						</div>
-						<button [disabled]="loading" class="btn btn-success btn-sm btn-block"><span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>Ingresar</button>
-						<div *ngIf="error" class="alert alert-danger mt-3 mb-0">{{error}}</div>
-					</form>
 					</div>
-				</div>
-			  </div>
-			</ng-template>
-		</ngb-tab>
-		<ngb-tab>
-			<ng-template ngbTabTitle><b>Registrate</b></ng-template>
-			<ng-template ngbTabContent>
-			<br/>
-			  <div class="container">
-				<div class="row">
-					<div class="col-md-12">
-					<form>
-						<div class="form-group">
-							<input type="text" class="form-control" id="nombreRegistro" aria-describedby="emailHelp" placeholder="Ingresa tus nombres" maxlength="50" />
+				</ng-template>
+			</ngb-tab>
+			<ngb-tab>
+				<ng-template ngbTabTitle><b>Registrate</b></ng-template>
+				<ng-template ngbTabContent>
+					<br />
+					<div class="container">
+						<div class="row">
+							<div class="col-md-12">
+								<form>
+									<div class="form-group">
+										<input type="text" class="form-control" name="nombreRegistro"
+											id="nombreRegistro" [(ngModel)]="beanUsuario.nombres"
+											aria-describedby="emailHelp" placeholder="Ingresa tus nombres"
+											maxlength="50" />
+									</div>
+									<div class="form-group">
+										<input type="text" class="form-control" name="apellidoRegistro"
+											id="apellidoRegistro" [(ngModel)]="beanUsuario.apellidos"
+											aria-describedby="emailHelp" placeholder="Ingresa tus apellidos"
+											maxlength="50" />
+									</div>
+									<div class="form-group">
+										<input type="email" class="form-control" name="emailRegistro" id="emailRegistro"
+											[(ngModel)]="beanUsuario.email" aria-describedby="emailHelp"
+											placeholder="Ingresa tu email" maxlength="50" />
+									</div>
+									<div class="form-group">
+										<input type="password" class="form-control" name="passwordRegistro"
+											id="passwordRegistro" [(ngModel)]="beanUsuario.password"
+											placeholder="Ingresa tu Contraseña" maxlength="10" required />
+									</div>
+									<div class="form-group">
+										<input type="password" class="form-control" name="repasswordRegistro"
+											id="repasswordRegistro" [(ngModel)]="repitePassword"
+											placeholder="Repite tu Contraseña" maxlength="10" required />
+									</div>
+									<button type="submit" class="btn btn-success btn-sm btn-block"
+										(click)="registrarUsuario()"><span *ngIf="loading"
+											class="spinner-border spinner-border-sm mr-1"></span>Registrar</button>
+								</form>
+							</div>
 						</div>
-						<div class="form-group">
-							<input type="text" class="form-control" id="apellidoRegistro" aria-describedby="emailHelp" placeholder="Ingresa tus apellidos" maxlength="50" />
-						</div>
-                        <div class="form-group">
-							<input type="email" class="form-control" id="emailRegistro" aria-describedby="emailHelp" placeholder="Ingresa tu email" maxlength="50" />
-						</div>
-						<div class="form-group">
-							<input type="password" class="form-control" id="passwordRegistro" placeholder="Ingresa tu Contraseña" maxlength="10"/>
-						</div>
-                        <div class="form-group">
-							<input type="password" class="form-control" id="repasswordRegistro" placeholder="Reingresa tu Contraseña" maxlength="10"/>
-						</div>
-						<button type="submit" class="btn btn-success btn-sm btn-block"><span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>Registrar</button>
-					</form>
 					</div>
-				</div>
-			  </div>
-			</ng-template>
-		</ngb-tab>
-	</ngb-tabset>
-  </div>
+				</ng-template>
+			</ngb-tab>
+		</ngb-tabset>
+	</div>
 </ng-template>

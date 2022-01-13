@@ -17,5 +17,8 @@ import { HttpClient } from '@angular/common/http';
     listarPlatos(idPersona:number){
       return this.http.get<any>(`${environment.apiUrl_24210}/mf-service-plato/platoservice/platos/${ idPersona }`);
     }
+    consultaCompletaPlato(idPlato:number){
+      return this.http.get<any>(`${environment.apiUrl_24210}/mf-service-plato/platoRecetaservice/plato/${ idPlato }`);
+    }
 
 }

@@ -13,13 +13,13 @@
         </div>
         <div class="col-md-12">
             <div class="list-group" style="overflow-y: scroll;-webkit-overflow-scrolling: touch; height: 400px;">
-                <a class="list-group-item list-group-item-action flex-column align-items-start" *ngFor="let v_plato of listaPlatos | filtroplatos: nombrePlato">
+                <a class="list-group-item list-group-item-action flex-column align-items-start" [routerLink]="['/receta', v_plato.id]" *ngFor="let v_plato of listaPlatos | filtroplatos: nombrePlato" style="cursor: pointer;">
                     <div class="d-flex w-100 justify-content-between">
                         <h5 class="mb-1"><span style="color:rgb(14, 16, 100)">{{v_plato.nombrePlato}}</span>&nbsp;<span style="color:rgb(192, 169, 38)" *ngIf="v_plato.favorito"><fa-icon [icon]="['fas', 'star']"></fa-icon></span></h5>
-                        <small>3 days ago</small>
+                        <small>Id: {{v_plato.id}}</small>
                     </div>
                     <p class="mb-1">{{v_plato.descripcionPlato}}</p>
-                    <small>Donec id elit non mi porta.</small>
+                    <!--small>Donec id elit non mi porta.</small-->
                 </a>
             </div>
         </div>

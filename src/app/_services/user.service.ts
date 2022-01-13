@@ -11,4 +11,8 @@ export class UserService {
     getAll() {
         return this.http.get<Respuesta[]>(`${environment.apiUrl_1}/users`);
     }
+
+    registrarUsuario(usuario:any){
+        return this.http.post<any>(`${environment.apiUrl_1}/api/users`, {usuario});
+    }
 }

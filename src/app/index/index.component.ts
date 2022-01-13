@@ -1,12 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { FormBuilder, FormGroup, Validators, FormsModule } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, FormsModule, FormControl } from '@angular/forms';
 import { first } from 'rxjs/operators';
 
-import { AuthenticationService } from '@app/_services';
+import { AuthenticationService, UserService } from '@app/_services';
 
 import { FaConfig } from '@fortawesome/angular-fontawesome';
 import { NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
+import { Usuario } from '@app/_models/usuario';
 
 @Component({
   selector: 'app-index',
@@ -20,19 +21,24 @@ export class IndexComponent implements OnInit {
   submitted = false;
   returnUrl: string;
   error = '';
+  beanUsuario: Usuario;
+  repitePassword: string;
+  form: FormGroup = new FormGroup({});
 
   constructor(
         private formBuilder: FormBuilder,
         private route: ActivatedRoute,
         private router: Router,
         private authenticationService: AuthenticationService,
-		faConfig: FaConfig, private modalService: NgbModal
-    ) { 
+        private userService: UserService,
+		    private faConfig: FaConfig, private modalService: NgbModal, private fb: FormBuilder
+    ) {
         // redirect to home if already logged in
         if (this.authenticationService.userValue) { 
             this.router.navigate(['/']);
         }
-		faConfig.defaultPrefix = 'far';
+        faConfig.defaultPrefix = 'far';
+
     }
 
   ngOnInit() {
@@ -42,6 +48,7 @@ export class IndexComponent implements OnInit {
         });
         // get return url from route parameters or default to '/'
         this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
+        this.beanUsuario = new Usuario();
   }
 
   open(content) {
@@ -89,4 +96,10 @@ export class IndexComponent implements OnInit {
 					this.loading = false;
 				});
 	}
+
+  registrarUsuario(){
+    this.userService.registrarUsuario(this.beanUsuario).subscribe(resp => {
+      console.log(resp);
+    });
+  }
 }
