@@ -21,6 +21,7 @@ export class RecetasComponent implements OnInit {
     if (this.userSubject.value != null) {
       this.idUser = this.userSubject.value.id.toString();
     }
+    faConfig.defaultPrefix = 'far';
   }
 
   ngOnInit(): void {
