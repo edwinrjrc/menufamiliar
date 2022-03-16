@@ -4,6 +4,7 @@ import { PlatoService } from '@app/_services';
 import { BehaviorSubject, Observable, throwError } from 'rxjs';
 
 import { User } from '@app/_models';
+import { FaConfig } from '@fortawesome/angular-fontawesome';
 
 @Component({
   selector: 'app-recetas',
@@ -16,7 +17,7 @@ export class RecetasComponent implements OnInit {
   nombrePlato = '';
   listaPlatos: any[] = [];
 
-  constructor(private platoService:PlatoService) { 
+  constructor(private platoService:PlatoService, private faConfig: FaConfig) { 
     this.userSubject = new BehaviorSubject<User>(JSON.parse(localStorage.getItem('user')));
     if (this.userSubject.value != null) {
       this.idUser = this.userSubject.value.id.toString();
