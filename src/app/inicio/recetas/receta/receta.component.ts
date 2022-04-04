@@ -10,6 +10,7 @@ import { FaConfig } from '@fortawesome/angular-fontawesome';
 import { IngredienteReceta } from '@app/_models/ingredienteReceta';
 import { Ingrediente, UnidadMedida } from '@app/_models';
 import { Preparacion } from '@app/_models/preparacion';
+import { RecetaService } from '@app/_services/receta.service';
 
 
 @Component({
@@ -29,7 +30,7 @@ export class RecetaComponent implements OnInit {
   listaUnidades: any[] = [];
   listaIngredientes: any[] = [];
 
-  constructor(private rutaActiva: ActivatedRoute, private unidadMedidaService: UnidadMedidaService, private platoService: PlatoService, private ingredienteService: IngredienteService, private modalService: NgbModal, private faConfig: FaConfig) {
+  constructor(private rutaActiva: ActivatedRoute, private unidadMedidaService: UnidadMedidaService, private platoService: PlatoService, private ingredienteService: IngredienteService, private modalService: NgbModal, private faConfig: FaConfig, private recetaService:RecetaService) {
     faConfig.defaultPrefix = 'far';
   }
 
@@ -80,15 +81,101 @@ export class RecetaComponent implements OnInit {
     });
   }
 
-  agregarListaReceta(){
+  agregarListaReceta(idxLista: number){
     let ingreReceta:IngredienteReceta  = new IngredienteReceta();
     ingreReceta.UnidadMedida = new UnidadMedida();
     ingreReceta.Ingrediente = new Ingrediente();
-    this.v_listaRecetaModal.push(ingreReceta);
+
+    this.v_listaRecetaModal.splice(idxLista+1, 0, ingreReceta);
+  }
+
+  agregarListaPreparacion(idxLista: number){
+    let preparacion:Preparacion = new Preparacion();
+
+    this.v_preparacionModal.splice(idxLista+1, 0, preparacion);
+
+    for (var i=0; i<this.v_preparacionModal.length; i++){
+      this.v_preparacionModal[i].NroPaso = i+1;
+    }
   }
 
   eliminarElementoReceta(index:number){
     this.v_listaRecetaModal.splice(index,1);
+  }
+
+  eliminarPreparacion(index:number){
+    this.v_preparacionModal.splice(index,1);
+
+    for (var i=0; i<this.v_preparacionModal.length; i++){
+      this.v_preparacionModal[i].NroPaso = i+1;
+    }
+  }
+
+  bajarPasoPreparacion(index:number){
+    this.v_preparacionModal[index].NroPaso = this.v_preparacionModal[index].NroPaso + 1;
+    this.v_preparacionModal[index+1].NroPaso = this.v_preparacionModal[index+1].NroPaso - 1;
+
+    let prepa_1:Preparacion = this.v_preparacionModal[index];
+    let prepa_2:Preparacion = this.v_preparacionModal[index+1];
+
+    this.v_preparacionModal[index] = prepa_2;
+    this.v_preparacionModal[index+1] = prepa_1;
+  }
+
+  subirPasoPreparacion(index:number){
+    this.v_preparacionModal[index].NroPaso = this.v_preparacionModal[index].NroPaso - 1;
+    this.v_preparacionModal[index-1].NroPaso = this.v_preparacionModal[index-1].NroPaso + 1;
+
+    let prepa_1:Preparacion = this.v_preparacionModal[index];
+    let prepa_2:Preparacion = this.v_preparacionModal[index-1];
+
+    this.v_preparacionModal[index] = prepa_2;
+    this.v_preparacionModal[index-1] = prepa_1;
+  }
+
+  enviarPasoPreparacionAInicio(index:number){
+    let v_pasos = 1;
+    let v_preparacionModal_2: Array<Preparacion>;
+    v_preparacionModal_2 = new Array<Preparacion>();
+    this.v_preparacionModal[index].NroPaso = v_pasos;
+    v_preparacionModal_2.push(this.v_preparacionModal[index]);
+    
+    v_pasos++;
+
+    for (var i=0; i<this.v_preparacionModal.length; i++){
+      if (i != index){
+        this.v_preparacionModal[i].NroPaso = v_pasos;
+        v_preparacionModal_2.push(this.v_preparacionModal[i]);
+        v_pasos++;
+      }
+    }
+
+    this.v_preparacionModal = v_preparacionModal_2;
+  }
+
+  enviarPasoPreparacionAFin(index:number){
+    let v_pasos = 1;
+    let v_preparacionModal_2: Array<Preparacion>;
+    v_preparacionModal_2 = new Array<Preparacion>();
+
+    for (var i=0; i<this.v_preparacionModal.length; i++){
+      if (i != index){
+        this.v_preparacionModal[i].NroPaso = v_pasos;
+        v_preparacionModal_2.push(this.v_preparacionModal[i]);
+        v_pasos++;
+      }
+    }
+
+    this.v_preparacionModal[index].NroPaso = v_pasos;
+    v_preparacionModal_2.push(this.v_preparacionModal[index]);
+
+    this.v_preparacionModal = v_preparacionModal_2;
+  }
+
+  guardarReceta(){
+    this.recetaService.guardarModificacionReceta(this.v_preparacionModal,parseInt(this.v_idPlato)).subscribe(resp => {
+      console.log('Guardar receta');
+    });
   }
 
   private getDismissReason(reason: any): string {
@@ -100,9 +187,4 @@ export class RecetaComponent implements OnInit {
       return `with: ${reason}`;
     }
   }
-
-  enviarPasoPreparacionAInicio(){
-    console.log("Paso");
-  }
-
 }

@@ -65,17 +65,14 @@
     <hr>
     <p style="text-align: center;">Le fue util la informacion que encontro</p>
     <div class="container">
-
         <div class="row">
             <div class="col-md-6" style="text-align: center;">
-                <button type="button" class="btn btn-outline-info" style="width: 150px;">Si</button>
+                <button type="button" class="btn btn-success" style="width: 180px;"><fa-icon [icon]="['fas', 'check']"></fa-icon> Si</button>
             </div>
             <div class="col-md-6" style="text-align: center;">
-                <button type="button" class="btn btn-outline-info" style="width: 150px;" (click)="open(content)">No,
-                    editar receta</button>
+                <button type="button" class="btn btn-danger" style="width: 180px;" (click)="open(content)"><fa-icon [icon]="['fas', 'pen']"></fa-icon> No</button>
             </div>
         </div>
-
     </div>
 </div>
 <br>
@@ -87,12 +84,15 @@
     <div class="modal-header">
         <h4 class="modal-title" id="modal-basic-title">Editar Receta</h4>
         <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
-            <span aria-hidden="true">&times;</span>
+            <span aria-hidden="true">&times;</span> 
         </button>
     </div>
     <div class="modal-body">
-        <ngb-accordion #acc="ngbAccordion" activeIds="ngb-panel-0">
-            <ngb-panel title="Ingredientes">
+        <ngb-accordion #acc="ngbAccordion">
+            <ngb-panel id="toggle-1">
+                <ng-template ngbPanelTitle>
+                    <span><fa-icon [icon]="['fas', 'shopping-cart']"></fa-icon> Ingredientes</span>
+                </ng-template>
                 <ng-template ngbPanelContent>
                     <div class="container">
                         <table class="table table-striped" style="width: 100%;">
@@ -126,7 +126,7 @@
                                             (click)="eliminarElementoReceta(v_i)">
                                             <fa-icon [icon]="['fas', 'trash-alt']"></fa-icon>
                                         </button>
-                                        <button type="button" class="btn btn-success" (click)="agregarListaReceta()">
+                                        <button type="button" class="btn btn-success" (click)="agregarListaReceta(v_i)">
                                             <fa-icon [icon]="['fas', 'plus-square']"></fa-icon>
                                         </button>
                                     </td>
@@ -136,9 +136,9 @@
                     </div>
                 </ng-template>
             </ngb-panel>
-            <ngb-panel>
+            <ngb-panel id="toggle-2">
                 <ng-template ngbPanelTitle>
-                    <span>Preparacion</span>
+                    <span><fa-icon [icon]="['fas', 'drumstick-bite']"></fa-icon> Preparacion</span>
                 </ng-template>
                 <ng-template ngbPanelContent>
                     <div class="container">
@@ -161,22 +161,22 @@
                                     </td>
                                     <td>
                                         <button type="button" class="btn btn-success"
-                                            (click)="eliminarElementoReceta(v_i)">
+                                            (click)="eliminarPreparacion(v_i)">
                                             <fa-icon [icon]="['fas', 'trash-alt']"></fa-icon>
                                         </button>
-                                        <button type="button" class="btn btn-success">
+                                        <button type="button" class="btn btn-success" (click)="agregarListaPreparacion(v_i)">
                                             <fa-icon [icon]="['fas', 'plus-square']"></fa-icon>
                                         </button>
-                                        <button type="button" class="btn btn-success" [disabled]="v_paso_receta.nroPaso == 1" >
+                                        <button type="button" class="btn btn-success" [disabled]="v_paso_receta.nroPaso == 1" (click)="subirPasoPreparacion(v_i)" >
                                             <fa-icon [icon]="['fas', 'angle-up']"></fa-icon>
                                         </button>
-                                        <button type="button" class="btn btn-success" [disabled]="v_paso_receta.nroPaso == 1" (click)="enviarPasoPreparacionAInicio()">
+                                        <button type="button" class="btn btn-success" [disabled]="v_paso_receta.nroPaso == 1" (click)="enviarPasoPreparacionAInicio(v_i)">
                                             <fa-icon [icon]="['fas', 'angle-double-up']"></fa-icon>
                                         </button>
-                                        <button type="button" class="btn btn-success">
-                                            <fa-icon [icon]="['fas', 'angle-down']"></fa-icon>
+                                        <button type="button" class="btn btn-success" [disabled]="(v_paso_receta.nroPaso == v_preparacionModal.length)" (click)="bajarPasoPreparacion(v_i)">
+                                            <fa-icon [icon]="['fas', 'angle-down']" ></fa-icon>
                                         </button>
-                                        <button type="button" class="btn btn-success">
+                                        <button type="button" class="btn btn-success" [disabled]="(v_paso_receta.nroPaso == v_preparacionModal.length)" (click)="enviarPasoPreparacionAFin(v_i)">
                                             <fa-icon [icon]="['fas', 'angle-double-down']"></fa-icon>
                                         </button>
                                     </td>
@@ -188,4 +188,7 @@
             </ngb-panel>
         </ngb-accordion>
     </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-success" (click)="guardarReceta()"><fa-icon [icon]="['fas', 'save']"></fa-icon> Guardar Mi Receta</button>
+      </div>
 </ng-template>

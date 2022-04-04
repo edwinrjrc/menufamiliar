@@ -7,6 +7,7 @@ export const environment = {
   apiUrl_1: 'http://edwinLaptop:24234',
   apiUrl_24209: 'http://edwinLaptop:24209',
   apiUrl_24210: 'http://edwinLaptop:24210',
+  apiUrl_24215: 'http://edwinLaptop:24215',
   apiUrl_24235: 'http://edwinLaptop:24235'
 };
 
