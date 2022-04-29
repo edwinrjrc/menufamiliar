@@ -8,9 +8,10 @@ import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { FaConfig } from '@fortawesome/angular-fontawesome';
 
 import { IngredienteReceta } from '@app/_models/ingredienteReceta';
-import { Ingrediente, UnidadMedida } from '@app/_models';
+import { Ingrediente, UnidadMedida, User } from '@app/_models';
 import { Preparacion } from '@app/_models/preparacion';
 import { RecetaService } from '@app/_services/receta.service';
+import { BehaviorSubject } from 'rxjs/internal/BehaviorSubject';
 
 
 @Component({
@@ -19,19 +20,27 @@ import { RecetaService } from '@app/_services/receta.service';
   styleUrls: ['./receta.component.css']
 })
 export class RecetaComponent implements OnInit {
+  private userSubject: BehaviorSubject<User>;
   v_idPlato: string;
   v_nomPlato: string;
   v_deplato: string;
+  v_comentarioReceta: string;
   v_ingredientes: Array<any>;
   v_preparacion: any[];
+  v_comentarios: any[];
   v_listaRecetaModal: Array<IngredienteReceta>;
   v_preparacionModal: Array<Preparacion>;
   closeResult = '';
   listaUnidades: any[] = [];
   listaIngredientes: any[] = [];
+  public idUser: string = '';
 
   constructor(private rutaActiva: ActivatedRoute, private unidadMedidaService: UnidadMedidaService, private platoService: PlatoService, private ingredienteService: IngredienteService, private modalService: NgbModal, private faConfig: FaConfig, private recetaService:RecetaService) {
     faConfig.defaultPrefix = 'far';
+    this.userSubject = new BehaviorSubject<User>(JSON.parse(localStorage.getItem('user')));
+    if (this.userSubject.value != null) {
+      this.idUser = this.userSubject.value.id.toString();
+    }
   }
 
   ngOnInit(): void {
@@ -41,6 +50,10 @@ export class RecetaComponent implements OnInit {
       this.v_deplato = resp.dataRpta.VALOR_DTO.descripcionPlato;
       this.v_ingredientes = resp.dataRpta.LISTA_INGREDIENTES;
       this.v_preparacion = resp.dataRpta.LISTA_RECETA;
+      this.v_comentarios = resp.dataRpta.LISTA_COMENTARIOS;
+
+      console.log(resp.dataRpta);
+      console.log('Comentarios: '+this.v_comentarios.length);
 
       for (var i=0; i<this.v_ingredientes.length; i++){
         let ingreReceta:IngredienteReceta  = new IngredienteReceta();
@@ -176,6 +189,32 @@ export class RecetaComponent implements OnInit {
     this.recetaService.guardarModificacionReceta(this.v_preparacionModal,parseInt(this.v_idPlato)).subscribe(resp => {
       console.log('Guardar receta');
     });
+  }
+
+  guardarComentarioReceta(){
+    this.recetaService.guardarComentarioReceta(parseInt(this.v_idPlato),this.v_comentarioReceta,this.idUser).subscribe(resp => {
+      this.consultarComentarios(parseInt(this.v_idPlato));
+    });
+    this.v_comentarioReceta = '';
+  }
+
+  eliminarComentarioReceta(idComentarioReceta: number){
+    console.log(idComentarioReceta);
+    this.recetaService.eliminarComentarioReceta(idComentarioReceta,parseInt(this.idUser)).subscribe(resp => {
+      this.consultarComentarios(parseInt(this.v_idPlato));
+    });
+    this.v_comentarioReceta = '';
+  }
+
+  consultarComentarios(idPlato: number){
+    this.recetaService.consultarComentarios(idPlato).subscribe(resp => {
+      console.log(resp);
+      this.v_comentarios = resp.dataRpta;
+    });
+  }
+
+  triggerFunction(event: any) {
+    console.log(event);
   }
 
   private getDismissReason(reason: any): string {

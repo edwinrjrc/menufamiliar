@@ -61,16 +61,28 @@
         </tbody>
     </table>
 </div>
-<div class="container-fluid">
-    <hr>
-    <p style="text-align: center;">Le fue util la informacion que encontro</p>
-    <div class="container">
-        <div class="row">
-            <div class="col-md-6" style="text-align: center;">
-                <button type="button" class="btn btn-success" style="width: 180px;"><fa-icon [icon]="['fas', 'check']"></fa-icon> Si</button>
+<div class="container">
+    <div class="row">
+        <div class="col-md-11">
+            <textarea class="form-control" [(ngModel)]="v_comentarioReceta" rows="2" id="textarea1"
+                placeholder="Comparta su opinion"></textarea>
+        </div>
+        <div class="col-md-1">
+            <button type="button" class="btn btn-success btn-lg" (click)="guardarComentarioReceta()">
+                <fa-icon [icon]="['fas', 'paper-plane']"></fa-icon>
+            </button>
+        </div>
+    </div>
+    <div class="container" style="margin-top: 10px;">
+        <div class="row" *ngFor="let v_comentario of v_comentarios" style="margin-top: 0%;">
+            <div class="col-md-1">
+                <img [src]="'./assets/resources/img/avatar1.png'" class="images" style="width: 40px; height: 40px;">
             </div>
-            <div class="col-md-6" style="text-align: center;">
-                <button type="button" class="btn btn-danger" style="width: 180px;" (click)="open(content)"><fa-icon [icon]="['fas', 'pen']"></fa-icon> No</button>
+            <div class="col-md-10">
+                <div class="shadow-none p-3 mb-2 bg-light rounded">{{v_comentario.comentario}}</div>
+            </div>
+            <div class="col-md-1">
+                <button class="btn btn-success btn-circle btn-xl" (click)="eliminarComentarioReceta(v_comentario.idComentarioPlato)"><fa-icon [icon]="['fas', 'trash-alt']"></fa-icon></button>
             </div>
         </div>
     </div>
@@ -79,116 +91,3 @@
 <div class="container-fluid">
     <app-footer></app-footer>
 </div>
-<!--   modal de edicion de receta -->
-<ng-template #content let-modal>
-    <div class="modal-header">
-        <h4 class="modal-title" id="modal-basic-title">Editar Receta</h4>
-        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
-            <span aria-hidden="true">&times;</span> 
-        </button>
-    </div>
-    <div class="modal-body">
-        <ngb-accordion #acc="ngbAccordion">
-            <ngb-panel id="toggle-1">
-                <ng-template ngbPanelTitle>
-                    <span><fa-icon [icon]="['fas', 'shopping-cart']"></fa-icon> Ingredientes</span>
-                </ng-template>
-                <ng-template ngbPanelContent>
-                    <div class="container">
-                        <table class="table table-striped" style="width: 100%;">
-                            <thead>
-                                <tr>
-                                    <th scope="col">Cantidad</th>
-                                    <th scope="col">Unidad Medida</th>
-                                    <th scope="col">Ingrediente</th>
-                                    <th scope="col">Opc</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr *ngFor="let v_paso_receta of v_listaRecetaModal; let v_i = index;">
-                                    <td><input type="number" class="form-control" [(ngModel)]="v_paso_receta.cantidad"
-                                            style="width: 90px;text-align: right;"></td>
-                                    <td><select class="form-control"
-                                            [(ngModel)]="v_paso_receta.unidadMedida.idUnidadMedida">
-                                            <option>-Seleccione-</option>
-                                            <option [value]="item.idUnidadMedida" *ngFor="let item of listaUnidades">
-                                                {{item.descripcionUnidadMedida}}</option>
-                                        </select></td>
-                                    <td><select class="form-control"
-                                            [(ngModel)]="v_paso_receta.ingrediente.idIngrediente">
-                                            <option>-Seleccione-</option>
-                                            <option [value]="item.id" *ngFor="let item of listaIngredientes">
-                                                {{item.nombreIngrediente}}</option>
-                                        </select>
-                                    </td>
-                                    <td>
-                                        <button type="button" class="btn btn-success"
-                                            (click)="eliminarElementoReceta(v_i)">
-                                            <fa-icon [icon]="['fas', 'trash-alt']"></fa-icon>
-                                        </button>
-                                        <button type="button" class="btn btn-success" (click)="agregarListaReceta(v_i)">
-                                            <fa-icon [icon]="['fas', 'plus-square']"></fa-icon>
-                                        </button>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </ng-template>
-            </ngb-panel>
-            <ngb-panel id="toggle-2">
-                <ng-template ngbPanelTitle>
-                    <span><fa-icon [icon]="['fas', 'drumstick-bite']"></fa-icon> Preparacion</span>
-                </ng-template>
-                <ng-template ngbPanelContent>
-                    <div class="container">
-                        <table class="table table-striped" style="width: 100%;">
-                            <thead>
-                                <tr>
-                                    <th scope="col">Nro Paso</th>
-                                    <th scope="col">Descripcion</th>
-                                    <th scope="col">Tiempo (min)</th>
-                                    <th scope="col">Opc</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr *ngFor="let v_paso_receta of v_preparacionModal; let v_i = index;">
-                                    <td><input type="number" class="form-control" [(ngModel)]="v_paso_receta.nroPaso"
-                                            style="width: 90px;text-align: right;"></td>
-                                    <td><textarea class="form-control" cols="50" rows="2" [(ngModel)]="v_paso_receta.descripcionPaso"></textarea></td>
-                                    <td><input type="number" class="form-control" [(ngModel)]="v_paso_receta.tiempo"
-                                        style="width: 90px;text-align: right;">
-                                    </td>
-                                    <td>
-                                        <button type="button" class="btn btn-success"
-                                            (click)="eliminarPreparacion(v_i)">
-                                            <fa-icon [icon]="['fas', 'trash-alt']"></fa-icon>
-                                        </button>
-                                        <button type="button" class="btn btn-success" (click)="agregarListaPreparacion(v_i)">
-                                            <fa-icon [icon]="['fas', 'plus-square']"></fa-icon>
-                                        </button>
-                                        <button type="button" class="btn btn-success" [disabled]="v_paso_receta.nroPaso == 1" (click)="subirPasoPreparacion(v_i)" >
-                                            <fa-icon [icon]="['fas', 'angle-up']"></fa-icon>
-                                        </button>
-                                        <button type="button" class="btn btn-success" [disabled]="v_paso_receta.nroPaso == 1" (click)="enviarPasoPreparacionAInicio(v_i)">
-                                            <fa-icon [icon]="['fas', 'angle-double-up']"></fa-icon>
-                                        </button>
-                                        <button type="button" class="btn btn-success" [disabled]="(v_paso_receta.nroPaso == v_preparacionModal.length)" (click)="bajarPasoPreparacion(v_i)">
-                                            <fa-icon [icon]="['fas', 'angle-down']" ></fa-icon>
-                                        </button>
-                                        <button type="button" class="btn btn-success" [disabled]="(v_paso_receta.nroPaso == v_preparacionModal.length)" (click)="enviarPasoPreparacionAFin(v_i)">
-                                            <fa-icon [icon]="['fas', 'angle-double-down']"></fa-icon>
-                                        </button>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </ng-template>
-            </ngb-panel>
-        </ngb-accordion>
-    </div>
-    <div class="modal-footer">
-        <button type="button" class="btn btn-success" (click)="guardarReceta()"><fa-icon [icon]="['fas', 'save']"></fa-icon> Guardar Mi Receta</button>
-      </div>
-</ng-template>

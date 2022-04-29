@@ -13,7 +13,7 @@ import { BehaviorSubject, Observable, throwError } from 'rxjs';
   styleUrls: ['./inicio.component.css']
 })
 export class InicioComponent implements OnInit {
-  private userSubject: BehaviorSubject<User>;             
+  private userSubject: BehaviorSubject<User>;
   listaMenuSemana: any[] = [];
   public inicio:boolean;
   public recetas:boolean;
