@@ -34,12 +34,14 @@ export class RecetaComponent implements OnInit {
   listaUnidades: any[] = [];
   listaIngredientes: any[] = [];
   public idUser: string = '';
+  public idUserNumber: number;
 
   constructor(private rutaActiva: ActivatedRoute, private unidadMedidaService: UnidadMedidaService, private platoService: PlatoService, private ingredienteService: IngredienteService, private modalService: NgbModal, private faConfig: FaConfig, private recetaService:RecetaService) {
     faConfig.defaultPrefix = 'far';
     this.userSubject = new BehaviorSubject<User>(JSON.parse(localStorage.getItem('user')));
     if (this.userSubject.value != null) {
       this.idUser = this.userSubject.value.id.toString();
+      this.idUserNumber = parseInt(this.idUser);
     }
   }
 
@@ -51,9 +53,6 @@ export class RecetaComponent implements OnInit {
       this.v_ingredientes = resp.dataRpta.LISTA_INGREDIENTES;
       this.v_preparacion = resp.dataRpta.LISTA_RECETA;
       this.v_comentarios = resp.dataRpta.LISTA_COMENTARIOS;
-
-      console.log(resp.dataRpta);
-      console.log('Comentarios: '+this.v_comentarios.length);
 
       for (var i=0; i<this.v_ingredientes.length; i++){
         let ingreReceta:IngredienteReceta  = new IngredienteReceta();

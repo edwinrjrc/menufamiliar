@@ -2,7 +2,7 @@
     <div class="card">
         <div class="card-header">
             <button type="button" class="btn btn-outline-secondary" (click)="generarMenu()">Generar Menu</button>
-            <button type="button" class="btn btn-outline-secondary">Exportar Lista Ingredientes</button>
+            <button type="button" class="btn btn-outline-secondary" (click)="exportarListaIngredientes()">Exportar Lista Ingredientes</button>
         </div>
         <div class="card-body">
             <div class="card-deck text-center" *ngFor="let v_semana of listaMenuSemana">

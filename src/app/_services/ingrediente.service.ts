@@ -15,4 +15,7 @@ import { HttpClient } from '@angular/common/http';
       return this.http.get<any>(`${environment.apiUrl_24235}/mf-service-ingrediente/ingredienteService/ingredientes`);
     }
 
+    exportarListaIngredientesMenu(idMenu:number){
+      return this.http.get<any>(`${environment.apiUrl_24235}/mf-service-ingrediente/ingredienteMenuService/ingredientesExport/${idMenu}`);  
+    }
 }

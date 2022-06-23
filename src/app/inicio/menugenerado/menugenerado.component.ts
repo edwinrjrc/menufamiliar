@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FaConfig } from '@fortawesome/angular-fontawesome';
 
-import { AuthenticationService } from '@app/_services';
+import { AuthenticationService, IngredienteService } from '@app/_services';
 import { MenugeneradoService } from '@app/_services';
 
 import { User } from '@app/_models';
@@ -20,7 +20,7 @@ export class MenugeneradoComponent implements OnInit {
   public recetas: boolean;
   
 
-  constructor(faConfig: FaConfig, private authenticationService: AuthenticationService, private menugeneradoService: MenugeneradoService) {
+  constructor(faConfig: FaConfig, private authenticationService: AuthenticationService, private menugeneradoService: MenugeneradoService, private ingredienteService:IngredienteService) {
     faConfig.defaultPrefix = 'far';
     this.userSubject = new BehaviorSubject<User>(JSON.parse(localStorage.getItem('user')));
     if (this.userSubject.value != null) {
@@ -42,6 +42,12 @@ export class MenugeneradoComponent implements OnInit {
     this.menugeneradoService.consultarMenuGenerado(idPersona).subscribe(resp => {
       console.log(resp);
       this.listaMenuSemana = resp.dataRpta;
+    });
+  }
+
+  exportarListaIngredientes(){
+    this.ingredienteService.exportarListaIngredientesMenu(50).subscribe(resp => {
+      console.log(resp);
     });
   }
 

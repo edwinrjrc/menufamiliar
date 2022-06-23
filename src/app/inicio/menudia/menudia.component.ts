@@ -5,9 +5,8 @@ import { BehaviorSubject, Observable, throwError } from 'rxjs';
 
 import { User } from '@app/_models';
 
-import { InicioComponent } from '@app/inicio/inicio.component';
-
 import { NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
+import { MenugeneradoComponent } from '../menugenerado/menugenerado.component';
 
 @Component({
   selector: 'app-menudia',
@@ -21,7 +20,7 @@ export class MenudiaComponent implements OnInit {
 
   @Input() menudiabean: any;
 
-  constructor(faConfig: FaConfig, private menugeneradoService: MenugeneradoService, private platoService: PlatoService, private inicioComponent: InicioComponent, private modalService: NgbModal) {
+  constructor(faConfig: FaConfig, private menugeneradoService: MenugeneradoService, private platoService: PlatoService, private menugeneradoComponent: MenugeneradoComponent, private modalService: NgbModal) {
     faConfig.defaultPrefix = 'far';
     this.userSubject = new BehaviorSubject<User>(JSON.parse(localStorage.getItem('user')));
       if (this.userSubject.value != null){
@@ -35,7 +34,8 @@ export class MenudiaComponent implements OnInit {
 
   cambiarMenuDia(idTipoPlato: string, fechaconsumo:string): void{
     this.menugeneradoService.cambiarMenuDia(this.idUser,idTipoPlato,fechaconsumo).subscribe(resp => {
-      this.inicioComponent.consultarMenuGenerado(this.idUser);
+      this.menugeneradoComponent.consultarMenuGenerado(this.idUser);
+      console.log('Consulta de menu semana');
     });
   }
 

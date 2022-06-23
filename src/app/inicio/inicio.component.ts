@@ -44,9 +44,12 @@ export class InicioComponent implements OnInit {
 	}
 
   consultarMenuGenerado(idPersona:string){
+    /*console.log(idPersona);
     this.menugeneradoService.consultarMenuGenerado(idPersona).subscribe(resp => {
       this.listaMenuSemana = resp.dataRpta;
-    });
+      //console.log('Menu generado consultado');
+      //console.log(this.listaMenuSemana);
+    });*/
   }
 
   cambiarARecetas(){

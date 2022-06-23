@@ -79,10 +79,13 @@
                 <img [src]="'./assets/resources/img/avatar1.png'" class="images" style="width: 40px; height: 40px;">
             </div>
             <div class="col-md-10">
-                <div class="shadow-none p-3 mb-2 bg-light rounded">{{v_comentario.comentario}}</div>
+                <div class="shadow-none p-1 mb-2 bg-light rounded">
+                    <span style="font-weight: bold; font-size: 11pt;">{{v_comentario.nombreUsuario}}</span><br>
+                    {{v_comentario.comentario}}
+                </div>
             </div>
             <div class="col-md-1">
-                <button class="btn btn-success btn-circle btn-xl" (click)="eliminarComentarioReceta(v_comentario.idComentarioPlato)"><fa-icon [icon]="['fas', 'trash-alt']"></fa-icon></button>
+                <button class="btn btn-success btn-circle btn-xl" (click)="eliminarComentarioReceta(v_comentario.idComentarioPlato)" [hidden]="v_comentario.idUsuarioRegistro != idUserNumber"><fa-icon [icon]="['fas', 'trash-alt']"></fa-icon></button>
             </div>
         </div>
     </div>
