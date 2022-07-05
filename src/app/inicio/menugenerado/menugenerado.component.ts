@@ -18,9 +18,9 @@ export class MenugeneradoComponent implements OnInit {
   listaMenuSemana: any[] = [];
   public inicio: boolean;
   public recetas: boolean;
-  
 
-  constructor(faConfig: FaConfig, private authenticationService: AuthenticationService, private menugeneradoService: MenugeneradoService, private ingredienteService:IngredienteService) {
+
+  constructor(faConfig: FaConfig, private authenticationService: AuthenticationService, private menugeneradoService: MenugeneradoService, private ingredienteService: IngredienteService) {
     faConfig.defaultPrefix = 'far';
     this.userSubject = new BehaviorSubject<User>(JSON.parse(localStorage.getItem('user')));
     if (this.userSubject.value != null) {
@@ -40,15 +40,31 @@ export class MenugeneradoComponent implements OnInit {
 
   consultarMenuGenerado(idPersona: string) {
     this.menugeneradoService.consultarMenuGenerado(idPersona).subscribe(resp => {
-      console.log(resp);
       this.listaMenuSemana = resp.dataRpta;
     });
   }
 
-  exportarListaIngredientes(){
+  exportarListaIngredientes() {
     this.ingredienteService.exportarListaIngredientesMenu(50).subscribe(resp => {
-      console.log(resp);
+      this.downloadFile(resp.dataRpta);
     });
+  }
+
+  downloadFile(data: any) {
+    const byteCharacters = atob(data.bytes64);
+    const byteNumbers = new Array(byteCharacters.length);
+    for (let i = 0; i < byteCharacters.length; i++) {
+      byteNumbers[i] = byteCharacters.charCodeAt(i);
+    }
+    const byteArray = new Uint8Array(byteNumbers);
+
+    const blob = new Blob([byteArray], { type: 'application/pdf' });
+    const url = window.URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = data.nombreArchivo;
+    a.click();
+    URL.revokeObjectURL(url);
   }
 
 }
